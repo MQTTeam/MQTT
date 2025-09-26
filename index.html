@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MQTTeam - 실시간 채팅 플랫폼</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/4.3.7/mqtt.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Bitcount+Single+Ink&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- 로그인 화면 -->
+  <div class="login-container" id="loginContainer">
+    <div class="logo">
+      <img src="Rabbit White_wide.png" alt="로고" style="width: 100%; height: 100%; object-fit: contain;">
+    </div>
+    <h1 class="brand-title">MQTTeam</h1>
+    <p class="brand-subtitle">Real-time Chat Platform</p>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon realtime"><img src="Lightning Logo.png" alt="실시간"></div>
+        <span class="feature-label">Real-time</span>
+      </div>
+      <div class="feature">
+        <div class="feature-icon reaction"><img src="Chat Logo.png" alt="리액션"></div>
+        <span class="feature-label">Reaction</span>
+      </div>
+      <div class="feature">
+        <div class="feature-icon mention"><img src="People Logo.png" alt="멘션"></div>
+        <span class="feature-label">Mention</span>
+      </div>
+    </div>
+
+    <div class="login-form">
+      <h2 class="form-title">Start Chat</h2>
+      <p class="form-subtitle">사용하실 닉네임을 입력해주세요.</p>
+      <div class="input-group">
+        <input type="text" class="nickname-input" id="nicknameInput" placeholder="닉네임을 입력하세요." maxlength="20">
+        <div class="error-message" id="errorMessage"></div>
+      </div>
+      <button class="join-btn" id="joinBtn">Join Chat</button>
+    </div>
+
+    <p class="footer-text">MQTT-based Real-time Chat • Kubernetes Platform</p>
+  </div>
+
+  <!-- 채팅 화면 -->
+  <div class="chat-container" id="chatContainer">
+    <!-- 헤더 -->
+    <header class="chat-header">
+      <div class="header-left">
+        <div class="header-logo">
+          <img src="Rabbit White_wide.png" alt="로고" style="width: 60%; height: 60%; object-fit: contain;">
+        </div>
+        <div>
+          <div class="header-title">MQTTeam</div>
+          <div class="connection-status" id="connectionStatus">
+            <div class="status-dot"></div>
+            <span>연결 상태 확인 중...</span>
+          </div>
+        </div>
+      </div>
+      <div class="header-right">
+        <!-- 나가기 -->
+        <button class="leave-btn" id="leaveBtn">
+          <img src="Chat_Exit.png" alt="나가기" class="icon-exit">
+        </button>
+        <!-- 참여자 토글 (나가기와 같은 라인/크기) -->
+        <button class="sidebar-toggle-btn" id="toggleSidebarBtn" aria-label="참여자 패널 접기">
+          <img src="Hide-user.png" alt="접기">
+        </button>
+      </div>
+    </header>
+
+    <!-- 본문 -->
+    <main class="chat-main">
+      <!-- 메시지 영역 -->
+      <div class="chat-messages">
+        <div class="messages-container" id="messagesContainer"></div>
+
+        <!-- 입력창 -->
+        <div class="input-container">
+          <div class="input-wrapper">
+            <textarea class="message-input" id="messageInput" placeholder="메시지를 입력하세요..." rows="1"></textarea>
+            <div class="input-actions">
+              <button class="action-btn" id="mentionBtn">@</button>
+              <button class="action-btn send-btn" id="sendBtn">➤</button>
+            </div>
+          </div>
+          <div class="input-hint">Enter로 전송 • Shift+Enter로 줄바꿈 • @닉네임으로 멘션</div>
+        </div>
+      </div>
+
+      <!-- 사이드바 (오버레이 슬라이드) -->
+      <aside class="sidebar" id="sidebar" aria-label="참여자 목록">
+        <div class="sidebar-section">
+          <div class="sidebar-title">
+            👥 참여자
+            <span class="user-count" id="userCount">0</span>
+          </div>
+          <div class="user-list" id="userList"></div>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
